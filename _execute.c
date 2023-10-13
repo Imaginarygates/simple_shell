@@ -17,7 +17,9 @@ pid_t pid;
 int status;
 char **env = environ;
 
-// Fork a new process
+/**
+ *  Fork a new process
+ */
 pid = fork();
 
 if (pid == -1)
@@ -29,7 +31,9 @@ exit(EXIT_FAILURE);
 }
 else if (pid == 0)
 {
-// Child process
+/**
+ * Child process
+ */
 if (execve(shell->tokens[0], shell->tokens, env) < 0)
 {
 perror("Execution of command failed");
@@ -40,10 +44,14 @@ exit(EX_BADUSAGE);
 }
 else
 {
-// Parent process
+/**
+ * Parent process
+ */
 wait(&status);
 
-// Check if the child process was terminated by a signal or exited normally
+/**
+ * Check if the child process was terminated by a signal or exited normally
+ */
 if (WIFSIGNALED(status))
 status = WTERMSIG(status);
 else if (WIFEXITED(status))
